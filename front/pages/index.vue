@@ -79,6 +79,8 @@ function start() {
       if (time.value === 0) {
         state.value = 'start'
         time.value = shotTime.value
+
+        playSound()
       }
     } else if (state.value === 'start') {
       if (time.value === 0) {
@@ -87,6 +89,8 @@ function start() {
         if (intervalId.value) {
           clearInterval(intervalId.value)
         }
+
+        playSound()
       }
     }
   }, 1000)
