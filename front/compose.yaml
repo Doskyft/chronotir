@@ -1,0 +1,7 @@
+services:
+  nuxt:
+    build: .
+    container_name: nuxt
+    restart: unless-stopped
+    ports:
+      - "3005:3000"
