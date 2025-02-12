@@ -47,6 +47,8 @@
 </template>
 
 <script setup lang="ts">
+import audioSrc from '~/assets/start.mp3'
+
 const DEFAULT_SHOT_TIME = 120
 const DEFAULT_WARNING_TIME = 30
 const DEFAULT_PREPARATION_TIME = 10
@@ -66,6 +68,8 @@ const intervalId: Ref<number | null> = ref(null)
 function start() {
   state.value = 'preparation'
   time.value = preparationTime.value
+
+  playSound()
 
   // @ts-ignore
   intervalId.value = setInterval(() => {
@@ -92,6 +96,8 @@ function stop() {
   state.value = 'end'
   time.value = 0
 
+  playSound()
+
   if (intervalId.value) {
     clearInterval(intervalId.value)
   }
@@ -101,9 +107,16 @@ function alert() {
   state.value = 'end'
   time.value = 0
 
+  playSound()
+
   if (intervalId.value) {
     clearInterval(intervalId.value)
   }
+}
+
+function playSound() {
+  const audio = new Audio(audioSrc)
+  audio.play()
 }
 
 function setSyncId() {
