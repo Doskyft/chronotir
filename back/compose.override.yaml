@@ -14,7 +14,7 @@ services:
     environment:
       MERCURE_EXTRA_DIRECTIVES: |
         demo
-        cors_origins http://localhost:3001 https://localhost:3001 https://chronotir.damienhebert.fr http://chronotir.damienhebert.fr
+        cors_origins http://localhost:3001 https://localhost:3001 https://chronotir.archers-caen.fr http://chronotir.archers-caen.fr
       # See https://xdebug.org/docs/all_settings#mode
       XDEBUG_MODE: "${XDEBUG_MODE:-off}"
     extra_hosts:

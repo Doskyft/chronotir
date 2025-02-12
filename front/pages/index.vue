@@ -113,7 +113,7 @@ function setSyncId() {
     return
   }
 
-  const url = new URL('https://localhost:4433/.well-known/mercure')
+  const url = new URL('https://chronotir.archers-caen.fr/api/.well-known/mercure')
   url.searchParams.append('topic', syncId.value)
 
   const eventSource = new EventSource(url);

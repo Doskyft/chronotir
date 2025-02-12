@@ -37,7 +37,7 @@
 <script setup lang="ts">
 const syncId: Ref<string | null> = ref(null)
 
-const API_URL = 'https:/localhost:4433/'
+const API_URL = 'https:/chronotir.archers-caen.fr/api/'
 
 function callApi(action: string) {
   if (syncId.value === null) {
