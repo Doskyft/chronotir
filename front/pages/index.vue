@@ -65,6 +65,24 @@ const time: Ref<number> = ref(0)
 
 const intervalId: Ref<number | null> = ref(null)
 
+onMounted(() => {
+  let wakeLock = null;
+
+  // Function that attempts to request a wake lock.
+  const requestWakeLock = async () => {
+    try {
+      wakeLock = await navigator.wakeLock.request('screen');
+      wakeLock.addEventListener('release', () => {
+        console.log('Wake Lock was released');
+      });
+
+      console.log('Wake Lock is active');
+    } catch (err: unknown) {
+      console.error(`${err.name}, ${err.message}`);
+    }
+  };
+})
+
 function start() {
   state.value = 'preparation'
   time.value = preparationTime.value
