@@ -53,7 +53,7 @@
 
     <button
         class="border rounded px-2 py-1 cursor-pointer"
-        @click="alert"
+        @click="danger"
     >
       Alert
     </button>
@@ -79,7 +79,7 @@ function callApi(action: string, body = {}) {
     'syncId': syncId.value,
   }
 
-  fetch('https://chronotir.archers-caen.fr/api/' + action, {
+  fetch('https:/localhost:4433/' + action, {
     method: 'POST',
     headers:{
       'Content-Type': 'application/x-www-form-urlencoded'
@@ -90,17 +90,23 @@ function callApi(action: string, body = {}) {
 
 function start() {
   callApi('start', {
-    preparationTime,
-    shotTime,
-    warningTime,
+    preparationTime: preparationTime.value,
+    shotTime: shotTime.value,
+    warningTime: warningTime.value,
   })
+
+  alert('Ordre envoyé')
 }
 
 function stop() {
-  callApi('stop')
+  callApi(`stop`)
+
+  alert('Ordre envoyé')
 }
 
-function alert() {
+function danger() {
   callApi('alert')
+
+  alert('Ordre envoyé')
 }
 </script>
