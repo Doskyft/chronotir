@@ -79,7 +79,7 @@ function callApi(action: string, body = {}) {
     'syncId': syncId.value,
   }
 
-  fetch('https:/localhost:4433/' + action, {
+  fetch('https://chronotir.archers-caen.fr/api/' + action, {
     method: 'POST',
     headers:{
       'Content-Type': 'application/x-www-form-urlencoded'
