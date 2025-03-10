@@ -9,6 +9,33 @@
     />
   </label>
 
+  <label>
+    Temps de préparation
+    <input
+        type="number"
+        v-model="preparationTime"
+        class="border rounded"
+    />
+  </label>
+
+  <label>
+    Temps de tir
+    <input
+        type="number"
+        v-model="shotTime"
+        class="border rounded"
+    />
+  </label>
+
+  <label>
+    Temps de fin (orange)
+    <input
+        type="number"
+        v-model="warningTime"
+        class="border rounded"
+    />
+  </label>
+
   <div class="flex gap-3">
     <button
         class="border rounded px-2 py-1 cursor-pointer"
@@ -35,28 +62,37 @@
 </template>
 
 <script setup lang="ts">
-const syncId: Ref<string | null> = ref(null)
+const syncId: Ref<string | null> = ref('caen')
+const preparationTime: Ref<number | null> = ref(10)
+const shotTime: Ref<number | null> = ref(120)
+const warningTime: Ref<number | null> = ref(30)
 
 const API_URL = 'https:/chronotir.archers-caen.fr/api/'
 
-function callApi(action: string) {
+function callApi(action: string, body = {}) {
   if (syncId.value === null) {
     return
   }
 
-  fetch(API_URL + action, {
+  body = {
+    ...body,
+    'syncId': syncId.value,
+  }
+
     method: 'POST',
     headers:{
       'Content-Type': 'application/x-www-form-urlencoded'
     },
-    body: new URLSearchParams({
-      'syncId': syncId.value,
-    })
+    body: new URLSearchParams(body)
   })
 }
 
 function start() {
-  callApi('start')
+  callApi('start', {
+    preparationTime,
+    shotTime,
+    warningTime,
+  })
 }
 
 function stop() {

@@ -138,13 +138,26 @@ function setSyncId() {
   eventSource.onmessage = (e) => {
     console.log(e)
 
-    const data: string = e.data
+    const data: {
+      action: string
+      times?: {
+        preparation: number
+        shot: number
+        warning: number
+      }
+    } = JSON.parse(e.data)
 
-    if (data === 'start') {
+    if (data.action === 'start') {
+      if (data.times) {
+        preparationTime.value = data.times.preparation
+        shotTime.value = data.times.shot
+        warningTime.value = data.times.warning
+      }
+
       start()
-    } else if (data === 'stop') {
+    } else if (data.action === 'stop') {
       stop()
-    } else if (data === 'alert') {
+    } else if (data.action === 'alert') {
       alert()
     }
   };

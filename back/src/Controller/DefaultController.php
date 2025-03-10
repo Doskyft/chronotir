@@ -20,6 +20,9 @@ class DefaultController extends AbstractController
     ) {
     }
 
+    /**
+     * @throws \JsonException
+     */
     #[Route('/start', name: 'start', methods: ['POST'])]
     public function start(Request $request): JsonResponse
     {
@@ -31,7 +34,14 @@ class DefaultController extends AbstractController
         if ($form->isValid()) {
             $this->hub->publish(new Update(
                 $command->syncId,
-                'start'
+                json_encode([
+                    'action' => 'start',
+                    'times' => [
+                        'preparation' => $command->preparationTime ?? 10,
+                        'shot' => $command->shotTime ?? 120,
+                        'warning' => $command->warningTime ?? 30,
+                    ]
+                ], JSON_THROW_ON_ERROR)
             ));
 
             return $this->json([
@@ -45,6 +55,9 @@ class DefaultController extends AbstractController
         ]);
     }
 
+    /**
+     * @throws \JsonException
+     */
     #[Route('/stop', name: 'stop', methods: ['POST'])]
     public function stop(Request $request): JsonResponse
     {
@@ -56,7 +69,7 @@ class DefaultController extends AbstractController
         if ($form->isValid()) {
             $this->hub->publish(new Update(
                 $command->syncId,
-                'stop'
+                json_encode(['action' => 'stop'], JSON_THROW_ON_ERROR),
             ));
 
             return $this->json([
@@ -69,6 +82,9 @@ class DefaultController extends AbstractController
         ]);
     }
 
+    /**
+     * @throws \JsonException
+     */
     #[Route('/alert', name: 'alert', methods: ['POST'])]
     public function alert(Request $request): JsonResponse
     {
@@ -80,7 +96,7 @@ class DefaultController extends AbstractController
         if ($form->isValid()) {
             $this->hub->publish(new Update(
                 $command->syncId,
-                'alert'
+                json_encode(['action' => 'alert'], JSON_THROW_ON_ERROR),
             ));
 
             return $this->json([
